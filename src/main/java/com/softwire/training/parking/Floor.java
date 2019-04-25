@@ -34,4 +34,9 @@ public class Floor {
                 .filter(s -> !s.isOccupied())
                 .count();
     }
+
+    public ParkingSpace getNearestFreeSpaceForVehicle(Vehicle vehicle) {
+        // TODO - replace this!
+        return null;
+    }
 }
