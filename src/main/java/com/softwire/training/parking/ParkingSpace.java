@@ -28,4 +28,22 @@ public class ParkingSpace {
         return vehicle.getHeight() <= maxHeight && vehicle.getWidth() <= maxWidth && vehicle.getType() == typeRestriction;
 
     }
+
+    public void parkVehicle(Vehicle vehicle) throws IllegalArgumentException, IllegalStateException {
+        // TODO - replace this!
+    }
+
+    public void vacate() {
+        // TODO - replace this!
+    }
+
+    public Vehicle getParkedVehicle() {
+        // TODO - replace this!
+        return null;
+    }
+
+    public boolean isOccupied() {
+        // TODO - replace this!
+        return false;
+    }
 }
