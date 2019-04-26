@@ -30,6 +30,10 @@ public class MultiStorey {
 
     public ParkingSpace getSpaceContainingVehicleWithRegistration(String registration) {
         // TODO - replace this!
-        return null;
+        return carPark.stream()
+                .flatMap(f -> f.getParkingSpaces().stream())
+                .filter(s -> s.isOccupied() && s.getParkedVehicle().getRegistration().equals(registration))
+                .findFirst()
+                .orElse(null);
     }
 }
