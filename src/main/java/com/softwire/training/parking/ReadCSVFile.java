@@ -2,29 +2,38 @@ package com.softwire.training.parking;
 
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.DateTimeException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.zip.DataFormatException;
 
 public class ReadCSVFile {
 
-    public static List<ParkingSpace> getSpacesFromCSV(String filename) throws IOException {
+    public static MultiStorey getCarParkFromCsv(String filename) throws IOException {
 
         List<String> csvFile = new ArrayList<>(Files.readAllLines(Paths.get(filename)));
-        List<ParkingSpace> spacesFromCSV = new ArrayList<>();
+
+        HashMap<Integer, Floor> floors = new HashMap<>();
+
         for (String line : csvFile) {
-            spacesFromCSV.add(eachSpace(line));
+            int floorNumber = getFloorNumberFromLine(line);
+            ParkingSpace parkingSpace = getParkingSpaceFromLine(line);
+            floors.computeIfAbsent(floorNumber, Floor::new).addParkingSpace(parkingSpace);
         }
-        return spacesFromCSV;
+        return new MultiStorey(floors.values());
     }
-    private static ParkingSpace eachSpace (String csvLine) {
+
+    private static ParkingSpace getParkingSpaceFromLine(String csvLine) {
         String[] line = csvLine.split(",");
-        
+        return new ParkingSpace(Integer.valueOf(line[1]),
+                Double.valueOf(line[3]),
+                Double.valueOf(line[2]),
+                Vehicle.Type.valueOf(line[4]));
+
+    }
+    private  static int getFloorNumberFromLine(String csvLine) {
+        String[] line = csvLine.split(" ");
+        return Integer.valueOf(line[0]);
     }
 }
